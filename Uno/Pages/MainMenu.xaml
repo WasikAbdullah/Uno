@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Uno.Pages.MainMenu">
+    <ContentPage.Content>
+        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="25" WidthRequest="250">
+            <Entry x:Name="GameId" Placeholder="Leave empty to create lobby" Keyboard="Numeric"/>
+            <Entry x:Name="UserName" Placeholder="Name"/>
+            <Button Text="Join/Create" Clicked="Button_OnClicked"/>
+        </VerticalStackLayout>
+    </ContentPage.Content>
+</ContentPage>
