@@ -4,5 +4,5 @@ namespace Uno;
 
 public class AppShell : Shell
 {
-    public AppShell(HttpClient client) => CurrentItem = new MainMenu(client);
+    public AppShell() => CurrentItem = new MainMenu();
 }

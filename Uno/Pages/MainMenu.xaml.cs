@@ -11,10 +11,10 @@ public partial class MainMenu
 {
     private readonly Game _game;
     
-    public MainMenu(HttpClient client)
+    public MainMenu()
     {
         InitializeComponent();
-        _game = new(client);
+        _game = new();
     }
     
     private async void Button_OnClicked(object? sender, EventArgs e)

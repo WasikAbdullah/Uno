@@ -4,9 +4,9 @@ namespace Uno;
 
 public partial class App 
 {
-    public App(HttpClient client)
+    public App()
     {
         InitializeComponent();
-        MainPage = new AppShell(client);
+        MainPage = new AppShell();
     }
 }

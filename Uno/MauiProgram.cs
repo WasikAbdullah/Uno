@@ -8,10 +8,10 @@ public static class MauiProgram
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
-        builder.Services.AddSingleton(new HttpClient
-        {
-            BaseAddress = new("https://8e6b-27-147-201-22.ngrok-free.app")
-        });
+        // builder.Services.AddSingleton(new HttpClient
+        // {
+        //     BaseAddress = new("")
+        // });
         builder
             .UseMauiApp<App>()
             .ConfigureFonts(fonts =>

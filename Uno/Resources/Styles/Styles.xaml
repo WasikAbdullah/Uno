@@ -49,6 +49,10 @@
             </VisualStateGroupList>
         </Setter>
     </Style>
+    
+    <Style TargetType="StackLayout">
+        <Setter Property="HorizontalOptions" Value="Center"/>
+    </Style>
 
     <Style TargetType="CheckBox">
         <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
@@ -157,6 +161,12 @@
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>
+    </Style>
+    
+    <Style TargetType="views:Card">
+        <Setter Property="Margin" Value="0,0,-20,0"/>
+        <Setter Property="HeightRequest" Value="200"/>
+        <Setter Property="WidthRequest" Value="100"/>
     </Style>
 
     <Style TargetType="Label">

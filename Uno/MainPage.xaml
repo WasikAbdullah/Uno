@@ -3,6 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Uno.MainPage">
 
-    <Grid x:Name="Grid" RowDefinitions="Auto,*,Auto" ColumnDefinitions="Auto,*,Auto"/>
+    <Grid x:Name="CardTable" RowDefinitions="Auto,*,Auto" ColumnDefinitions="Auto,*,Auto"/>
 
 </ContentPage>

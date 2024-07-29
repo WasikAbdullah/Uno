@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Uno.Views;
 
-public partial class Card : ContentView
+public class Card : ImageButton
 {
     private static readonly string[] Colors =
     [
@@ -16,11 +16,20 @@ public partial class Card : ContentView
         "yellow",
         "green"
     ];
+    private int _cardValue;
+    public int CardValue
+    {
+        get => _cardValue;
+        set
+        {
+            _cardValue = value;
+            BackgroundColor = Color.Parse(Colors[value >> 4]);
+        }
+    }
     
     public Card(int card)
     {
-        InitializeComponent();
-        Button.BackgroundColor = Color.Parse(Colors[card >> 4]);
-        Button.Source = $"i{card & 0xF}.png";
+        CardValue = card;
+        Source = $"i{card & 0xF}.png";
     }
 }
