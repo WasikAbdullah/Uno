@@ -9,7 +9,7 @@ namespace Uno.Views;
 
 public partial class CardStack : ContentView
 {
-    public event Func<int, Task> CardPicked = null!;
+    public event Func<int?, Task> CardPicked = null!;
     public int CurrentCard { get; set; }
 
     public CardStack()
