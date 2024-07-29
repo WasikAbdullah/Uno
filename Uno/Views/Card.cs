@@ -26,10 +26,16 @@ public class Card : ImageButton
             BackgroundColor = Color.Parse(Colors[value >> 4]);
         }
     }
+    public bool IsBlack => CardValue >> 4 is 0;
     
     public Card(int card)
     {
         CardValue = card;
         Source = $"i{card & 0xF}.png";
     }
+
+    public bool IsValid(int currentCard) =>
+        IsBlack ||
+        CardValue >> 4 == currentCard >> 4 ||
+        (CardValue & 0xF) == (currentCard & 0xF);
 }
