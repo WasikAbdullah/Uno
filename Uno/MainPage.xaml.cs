@@ -56,8 +56,8 @@ public partial class MainPage
         {
             Orientation = (rowColumn & 1) is 1 ? StackOrientation.Horizontal : StackOrientation.Vertical
         };
-        CardTable.SetColumn(stack, rowColumn & 0b11);
-        CardTable.SetRow(stack, rowColumn >> 2);
+        Grid.SetColumn(stack, rowColumn & 0b11);
+        Grid.SetRow(stack, rowColumn >> 2);
         CardTable.Add(stack);
     }
     
