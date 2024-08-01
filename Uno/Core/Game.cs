@@ -7,7 +7,7 @@ namespace Uno.Core;
 public class Game()
 {
     public Events Events { get; } = new(); //TODO: Dependency Inject
-    public int? Id { get; private set; }
+    public int Id { get; private set; }
     private int _gameId;
     private readonly HttpClient _client = new();
     // {

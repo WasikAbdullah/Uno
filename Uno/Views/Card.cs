@@ -8,14 +8,6 @@ namespace Uno.Views;
 
 public class Card : ImageButton
 {
-    private static readonly string[] Colors =
-    [
-        "black",
-        "red",
-        "blue",
-        "yellow",
-        "green"
-    ];
     private int _cardValue;
     public int CardValue
     {
@@ -23,7 +15,7 @@ public class Card : ImageButton
         set
         {
             _cardValue = value;
-            BackgroundColor = Color.Parse(Colors[value >> 4]);
+            BackgroundColor = Color.Parse(StaticData.Colors[value >> 4]);
         }
     }
     public bool IsBlack => CardValue >> 4 is 0;

@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Uno.Core;
+﻿using Uno.Core;
 using Uno.Core.Models;
 using Uno.Views;
 
@@ -15,7 +14,7 @@ public partial class MainPage
         0b0100
     ];
     private readonly Game _game;
-    private StackLayout CardStack => (StackLayout)CardTable[_game.Id!.Value];
+    private StackLayout CardStack => (StackLayout)CardTable[_game.Id];
     private bool CardsEnabled
     {
         set { foreach (Card card in CardStack) card.IsEnabled = value; }
@@ -52,7 +51,7 @@ public partial class MainPage
 
     private void AddStack(int i)
     {
-        var rowColumn = RowColumns[(4 + (i - _game.Id!.Value)) % 4];
+        var rowColumn = RowColumns[(4 + (i - _game.Id)) % 4];
         var stack = new StackLayout
         {
             Orientation = (rowColumn & 1) is 1 ? StackOrientation.Horizontal : StackOrientation.Vertical
@@ -65,9 +64,9 @@ public partial class MainPage
     private async void OnCardPicked(object? sender, EventArgs e)
     {
         var card = (Card)sender!;
-        if(!card.IsValid()) return;
+        if(!card.IsValid(((Card?)CardHolder.Content!).CardValue)) return;
         CardsEnabled = false;
-        if (card.IsBlack) card.CardValue = await ColorPicker.GetColorAsync();
+        if (card.IsBlack) card.CardValue |= await ColorPicker.GetColorAsync();
         await _game.SetCardAsync(card.CardValue);
     }
 }
