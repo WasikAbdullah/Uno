@@ -11,6 +11,8 @@ public class Events
     public event Action<Info[]>? PlayerUpdated;
     public event Action<CardPick>? CardPicked;
     public event Action<CardPenalty>? CardPenalty;
+    public event Action<CardSet>? CardSet; 
+        
     
     private readonly Memory<byte> _buffer = new(new byte[1024]); //TODO: Dependency Inject
     private readonly ClientWebSocket _socket = new();
@@ -38,6 +40,7 @@ public class Events
             Actions.PlayerUpdated => GetAction(PlayerUpdated),
             Actions.CardPicked => GetAction(CardPicked),
             Actions.CardPenalty => GetAction(CardPenalty),
+            Actions.CardSet => GetAction(CardSet),
             _ => throw new NotImplementedException()
         };
 

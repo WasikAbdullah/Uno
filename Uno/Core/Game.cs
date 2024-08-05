@@ -14,22 +14,25 @@ public class Game()
     //     BaseAddress = new(Ngrok.GetUriAsync().Result)
     // };
 
-    public async Task JoinAsync(string name,int skin,int? gameId)
+    public async Task JoinAsync(string name, int skin, int? gameId)
     {
         _client.BaseAddress = new(await Ngrok.GetUriAsync());
         _gameId = gameId ?? await _client.PostResponseAsJsonAsync<int>("create");
-        await Events.ConnectAsync(_client.BaseAddress!.ToString(),_gameId);
-        Id = await _client.PostAsJsonResponseAsJsonAsync<object,int>($"join/{_gameId}",
-            new Info
-            {
-                Name = name,
-                Skin = skin
-            });
+        await Events.ConnectAsync(_client.BaseAddress!.ToString(), _gameId);
+        Id = await _client.PostAsJsonResponseAsJsonAsync<object, int>($"join/{_gameId}", new Info
+        {
+            Name = name,
+            Skin = skin
+        });
     }
 
     public Task<int> PickCardAsync() =>
         _client.GetFromJsonAsync<int>($"pick/{_gameId}/{Id}");
 
-    public Task SetCardAsync(int? card) =>
-        _client.PostAsJsonAsync("card", card);
+    public Task<int> SetCardAsync(int? card, bool isUno = false) =>
+        _client.PostAsJsonResponseAsJsonAsync<object, int>("card", new
+        {
+            Card = card,
+            IsUno = isUno
+        });
 }

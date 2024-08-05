@@ -6,18 +6,24 @@ namespace Uno;
 
 public partial class MainPage
 {
-    private static readonly int[] RowColumns =
-    [
-        0b1001,
-        0b0110,
-        0b0001,
-        0b0100
-    ];
     private readonly Game _game;
     private StackLayout CardStack => (StackLayout)CardTable[_game.Id];
     private bool CardsEnabled
     {
-        set { foreach (Card card in CardStack) card.IsEnabled = value; }
+        set
+        {
+            foreach (var view in CardStack)
+                ((Card)view).IsEnabled = value;
+        }
+    }
+    private int CurrentPlayer
+    {
+        set
+        {
+            CardsEnabled = value == _game.Id;
+            var stack = (StackLayout)CardTable[value];
+            stack.BackgroundColor = StaticData.HighlightColor;
+        }
     }
     
     public MainPage(Game game)
@@ -27,6 +33,16 @@ public partial class MainPage
         for (var i = 0; i < 4; i++) AddStack(i);
         _game.Events.CardPenalty += CardPenalty;
         _game.Events.CardPicked += CardPicked;
+        _game.Events.CardSet += CardSet;
+    }
+
+    private void CardSet(CardSet cardSet)
+    {
+        CurrentPlayer = cardSet.NextId;
+        if(cardSet.Card is null) return;
+        CardHolder.Content = new Card(cardSet.Card!.Value);
+        var stack = (StackLayout)CardTable[cardSet.Id];
+        stack.RemoveAt(stack.Count - 1);
     }
 
     private void CardPenalty(CardPenalty penalty)
@@ -51,7 +67,7 @@ public partial class MainPage
 
     private void AddStack(int i)
     {
-        var rowColumn = RowColumns[(4 + (i - _game.Id)) % 4];
+        var rowColumn = StaticData.RowColumns[(4 + (i - _game.Id)) % 4];
         var stack = new StackLayout
         {
             Orientation = (rowColumn & 1) is 1 ? StackOrientation.Horizontal : StackOrientation.Vertical
@@ -67,6 +83,8 @@ public partial class MainPage
         if(!card.IsValid(((Card?)CardHolder.Content!).CardValue)) return;
         CardsEnabled = false;
         if (card.IsBlack) card.CardValue |= await ColorPicker.GetColorAsync();
-        await _game.SetCardAsync(card.CardValue);
+        CardHolder.Content = card;
+        CardStack.Remove(card);
+        CurrentPlayer = await _game.SetCardAsync(card.CardValue,CardStack.Count is 1);
     }
 }
