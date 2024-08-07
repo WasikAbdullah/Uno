@@ -2,7 +2,7 @@ namespace Uno;
 
 public static class StaticData
 {
-    public static Color HighlightColor { get; } = Color.Parse("");
+    public static Color HighlightColor { get; } = Color.Parse("#1abc9c");
     public static string[] Colors { get; } =
     [
         "black",
