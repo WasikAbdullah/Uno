@@ -25,29 +25,42 @@ public partial class MainPage
             stack.BackgroundColor = StaticData.HighlightColor;
         }
     }
+    private int CurrentCard
+    {
+        set => CardHolder.Content = new Card(value);
+    }
     
     public MainPage(Game game)
     {
         InitializeComponent();
         _game = game;
         for (var i = 0; i < 4; i++) AddStack(i);
-        _game.Events.CardPenalty += CardPenalty;
-        _game.Events.CardPicked += CardPicked;
+        _game.Events.Start += Start;
+        _game.Events.CardPenalty += penalty => AddCardsSelf(penalty.Cards);
+        _game.Events.CardPicked += pick => AddCards(pick.Id,pick.Count);
         _game.Events.CardSet += CardSet;
+    }
+
+    private void Start(Start start)
+    {
+        CurrentCard = start.StartCard;
+        AddCardsSelf(start.Cards);
+        for (var i = 0; i < 4; i++)
+            if(i != _game.Id) AddCards(i,7);
     }
 
     private void CardSet(CardSet cardSet)
     {
         CurrentPlayer = cardSet.NextId;
         if(cardSet.Card is null) return;
-        CardHolder.Content = new Card(cardSet.Card!.Value);
+        CurrentCard = cardSet.Card.Value;
         var stack = (StackLayout)CardTable[cardSet.Id];
         stack.RemoveAt(stack.Count - 1);
     }
 
-    private void CardPenalty(CardPenalty penalty)
+    private void AddCardsSelf(int[] cards)
     {
-        foreach (var card in penalty.Cards)
+        foreach (var card in cards)
         {
             var cardView = new Card(card);
             cardView.Clicked += OnCardPicked;
@@ -55,10 +68,10 @@ public partial class MainPage
         }
     }
 
-    private void CardPicked(CardPick pick)
+    private void AddCards(int id,int count)
     {
-        for (var i = 0; i < pick.Count; i++)
-            ((StackLayout)CardTable[pick.Id]).Add(new Image
+        for (var i = 0; i < count; i++)
+            ((StackLayout)CardTable[id]).Add(new Image
             {
                 Source = "uno.png",
                 HeightRequest = 200

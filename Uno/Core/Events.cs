@@ -9,6 +9,7 @@ namespace Uno.Core;
 public class Events
 { 
     public event Action<Info[]>? PlayerUpdated;
+    public event Action<Start>? Start;
     public event Action<CardPick>? CardPicked;
     public event Action<CardPenalty>? CardPenalty;
     public event Action<CardSet>? CardSet; 
@@ -38,6 +39,7 @@ public class Events
         action switch
         {
             Actions.PlayerUpdated => GetAction(PlayerUpdated),
+            Actions.Start => GetAction(Start),
             Actions.CardPicked => GetAction(CardPicked),
             Actions.CardPenalty => GetAction(CardPenalty),
             Actions.CardSet => GetAction(CardSet),
