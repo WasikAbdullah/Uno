@@ -6,8 +6,8 @@
 
     
     <Grid>
-        <views:ColorPicker x:Name="ColorPicker"/>
-        <HorizontalStackLayout>
+        <views:ColorPicker x:Name="ColorPicker" VerticalOptions="Center" HorizontalOptions="Center"/>
+        <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
             <ImageButton Source="cardstack.png"/>
             <Border x:Name="CardHolder"/>
         </HorizontalStackLayout>

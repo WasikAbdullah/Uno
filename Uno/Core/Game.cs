@@ -30,7 +30,7 @@ public class Game()
         _client.GetFromJsonAsync<int>($"pick/{_gameId}/{Id}");
 
     public Task<int> SetCardAsync(int? card, bool isUno = false) =>
-        _client.PostAsJsonResponseAsJsonAsync<object, int>("card", new
+        _client.PostAsJsonResponseAsJsonAsync<object, int>($"card/{_gameId}/{Id}", new
         {
             Card = card,
             IsUno = isUno

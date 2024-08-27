@@ -44,9 +44,9 @@ public partial class MainPage
     private void Start(Start start)
     {
         CurrentCard = start.StartCard;
-        AddCardsSelf(start.Cards);
+        AddCardsSelf(start.Cards); 
         for (var i = 0; i < 4; i++)
-            if(i != _game.Id) AddCards(i,7);
+             if(i != _game.Id) AddCards(i,7);
     }
 
     private void CardSet(CardSet cardSet)
@@ -74,7 +74,8 @@ public partial class MainPage
             ((StackLayout)CardTable[id]).Add(new Image
             {
                 Source = "uno.png",
-                HeightRequest = 200
+                HeightRequest = 100,
+                WidthRequest = 100
             });
     }
 
@@ -96,8 +97,8 @@ public partial class MainPage
         if(!card.IsValid(((Card?)CardHolder.Content!).CardValue)) return;
         CardsEnabled = false;
         if (card.IsBlack) card.CardValue |= await ColorPicker.GetColorAsync();
-        CardHolder.Content = card;
         CardStack.Remove(card);
+        CardHolder.Content = card;
         CurrentPlayer = await _game.SetCardAsync(card.CardValue,CardStack.Count is 1);
     }
 }
